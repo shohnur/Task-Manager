@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/all"
+        android:icon="@drawable/ic_all"
+        android:enabled="true"
+        android:title="All"
+        app:cnb_iconColor="@color/all" />
+    <item
+        android:id="@+id/inProcess"
+        android:title="In process"
+        android:icon="@drawable/ic_time_management"
+        app:cnb_iconColor="@color/process" />
+    <item
+        android:id="@+id/done"
+        android:icon="@drawable/ic_check_mark"
+        android:title="Done"
+        app:cnb_iconColor="@color/done" />
+</menu>
