@@ -8,21 +8,34 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import task.manager.R
+import task.manager.core.db.Data
+import task.manager.core.utils.Constants
 import task.manager.databinding.LayoutDialogBinding
 import java.util.*
 
-class AddTaskDialog(context: Context) : AlertDialog(context) {
+class AddTaskDialog(context: Context, titleD: String = "Add new task", data: Data? = null) :
+    AlertDialog(context) {
 
     private var date = ""
     private var binding: LayoutDialogBinding = DataBindingUtil.inflate(
         LayoutInflater.from(context), R.layout.layout_dialog, null, false
     )
 
-    var listener: ((name: String, date: String) -> Unit)? = null
+    var listener: ((data: Data) -> Unit)? = null
 
     init {
 
         binding.apply {
+
+            title.text = titleD
+
+            data?.let {
+                name.setText(it.taskName)
+                date.text = it.date
+                this@AddTaskDialog.date = it.date
+                add.text = "Update"
+            }
+
             date.setOnClickListener {
                 pickDateTime()
             }
@@ -36,7 +49,14 @@ class AddTaskDialog(context: Context) : AlertDialog(context) {
                         Toast.LENGTH_SHORT
                     ).show()
                     else {
-                        listener?.invoke(name.text.toString(), this@AddTaskDialog.date)
+                        listener?.invoke(
+                            Data(
+                                data?.id ?: 0,
+                                name.text.toString(),
+                                this@AddTaskDialog.date,
+                                Constants.NEW
+                            )
+                        )
                         cancel()
                     }
                 }

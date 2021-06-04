@@ -65,10 +65,8 @@ class MainActivity : AppCompatActivity() {
 
             add.setOnClickListener {
                 val dialog = AddTaskDialog(this@MainActivity)
-                dialog.listener = { name, date ->
-                    Data(0, name, date, Constants.NEW).apply {
-                        viewModel.addTask(this)
-                    }
+                dialog.listener = { d ->
+                    viewModel.addTask(d)
                 }
                 dialog.show()
             }
@@ -143,11 +141,19 @@ class MainActivity : AppCompatActivity() {
             adapter.delete(it)
         }
 
+        adapter.editClicked = {
+            val dialog = AddTaskDialog(this, "Edit task", it)
+            dialog.listener = { d ->
+                viewModel.update(d)
+            }
+            dialog.show()
+        }
+
         adapter.rootClicked = {
             if (it.status != Constants.DONE) {
                 val dialog = InfoDialog(this, it)
                 dialog.listener = { d ->
-                    viewModel.updateStatus(d)
+                    viewModel.update(d)
                 }
                 dialog.show()
             }

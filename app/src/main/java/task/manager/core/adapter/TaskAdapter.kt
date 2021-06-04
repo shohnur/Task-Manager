@@ -2,8 +2,8 @@ package task.manager.core.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +12,7 @@ import task.manager.core.db.Data
 import task.manager.core.utils.Constants
 import task.manager.databinding.ItemTaskBinding
 
-class TaskAdapter(var context:Context) : RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
+class TaskAdapter(var context: Context) : RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
 
     private val data = arrayListOf<Data>()
 
@@ -46,6 +46,7 @@ class TaskAdapter(var context:Context) : RecyclerView.Adapter<TaskAdapter.ViewHo
     override fun getItemCount(): Int = data.size
 
     var deleteClicked: ((data: Data) -> Unit)? = null
+    var editClicked: ((data: Data) -> Unit)? = null
     var rootClicked: ((data: Data) -> Unit)? = null
 
     inner class ViewHolder(var binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -58,10 +59,23 @@ class TaskAdapter(var context:Context) : RecyclerView.Adapter<TaskAdapter.ViewHo
                     deleteClicked?.invoke(data)
                 }
 
-                when(data.status){
-                    Constants.NEW->{ card.setCardBackgroundColor(context.getColor(R.color.all)) }
-                    Constants.PROCESS->{ card.setCardBackgroundColor(context.getColor(R.color.process)) }
-                    Constants.DONE->{ card.setCardBackgroundColor(context.getColor(R.color.done)) }
+                edit.setOnClickListener {
+                    editClicked?.invoke(data)
+                }
+
+                when (data.status) {
+                    Constants.NEW -> {
+                        edit.visibility = View.VISIBLE
+                        card.setCardBackgroundColor(context.getColor(R.color.all))
+                    }
+                    Constants.PROCESS -> {
+                        edit.visibility = View.GONE
+                        card.setCardBackgroundColor(context.getColor(R.color.process))
+                    }
+                    Constants.DONE -> {
+                        edit.visibility = View.GONE
+                        card.setCardBackgroundColor(context.getColor(R.color.done))
+                    }
                 }
 
                 root.setOnClickListener {

@@ -16,6 +16,6 @@ interface Dao {
     fun deleteTask(data: Data)
 
     @Update
-    fun updateStatus(data: Data)
+    fun update(data: Data)
 
 }

@@ -27,8 +27,8 @@ class ViewModel : ViewModel() {
         loadData()
     }
 
-    fun updateStatus(data: Data) {
-        dao.updateStatus(data)
+    fun update(data: Data) {
+        dao.update(data)
         loadData()
     }
 }
