@@ -138,7 +138,6 @@ class MainActivity : AppCompatActivity() {
 
         adapter.deleteClicked = {
             viewModel.deleteData(it)
-            adapter.delete(it)
         }
 
         adapter.editClicked = {

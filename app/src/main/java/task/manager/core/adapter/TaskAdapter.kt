@@ -24,12 +24,6 @@ class TaskAdapter(var context: Context) : RecyclerView.Adapter<TaskAdapter.ViewH
     }
 
 
-    fun delete(d: Data) {
-        val removingId = data.indexOf(d)
-        data.remove(d)
-        notifyItemRemoved(removingId)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
             DataBindingUtil.inflate(
